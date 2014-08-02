@@ -1,5 +1,5 @@
 meteor-issue-2033
- 
+https://github.com/meteor/meteor/issues/2033
  
 seems like the issue is occuring in Publish/Subscribe where : 
 
