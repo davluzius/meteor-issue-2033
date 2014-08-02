@@ -37,7 +37,7 @@ var myDocument = {
   name : "my document" , 
   items : []
 }
-//MyCollection.insert( myDocument );
+MyCollection.insert( myDocument );
 
 
 if (Meteor.isClient) {
