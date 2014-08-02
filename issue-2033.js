@@ -35,12 +35,9 @@ upon logout those publish functions seem to be invoked, but at the time of logou
 MyCollection = new Meteor.Collection("MyCollection");
 var myDocument = {
   name : "my document" , 
-  items : [{
-    _id : 33
-  }],
-  emptyItems : []
+  items : []
 }
-MyCollection.insert( myDocument );
+//MyCollection.insert( myDocument );
 
 
 if (Meteor.isClient) {
