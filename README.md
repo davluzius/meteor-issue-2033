@@ -3,8 +3,9 @@ meteor-issue-2033
  
 seems like the issue is : 
 
+Meteor.Publish 
 mongo $or operation on an expression which is trying to match null array values within an empty array of a collection
-
+e.g. return MyCollection.find( { $or: [ {title:"my document" } , { "items._id" : null } ] } );
 
 steps to replicate : 
 
