@@ -3,7 +3,7 @@ meteor-issue-2033
  
 seems like the issue is : 
 
-mongo $or operation on an expression which is trying to match null or undefined array values within an empty array
+mongo $or operation on an expression which is trying to match null array values within an empty array of a collection
 
 
 steps to replicate : 
