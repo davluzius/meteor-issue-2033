@@ -19,15 +19,12 @@ Notes :
 
 seems like the issue is : 
 
-mongo $or operation on an expression which is trying to match null array values 
+mongo $or operation on an expression which is trying to match null array value
 
 
-
-In the issue thread, people were experiencing the issue upon logout with mongo operations using "this.userId",
-upon logout those publish functions seem to be invoked, but at the time of logout the "this.userId"  value is null
-
-
-"ok" below just means the exception was not thrown
+return MyCollection.find(  {} , { "items._id" : null }  );  // seems ok for normal searching
+return MyCollection.find( { $or: [ {title:"my document" } , { "items._id" : null } ] } ); // Exception in defer callback: Error: failed to copy newResults into _published!
+return MyCollection.find( { $or: [ { "items._id" : null } ] } ); // Exception in defer callback: Error: failed to copy newResults into _published!
 
 */
 
@@ -37,6 +34,7 @@ var myDocument = {
   name : "my document" , 
   items : []
 }
+// inserts some data with empty but declared array
 MyCollection.insert( myDocument );
 
 
@@ -51,23 +49,8 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
 
   Meteor.publish("MyCollection", function () {
-
-    //return MyCollection.find( {}, { "items._id" : 33  } );   // ok
-    //return MyCollection.find( {}, { "nonProperty._id" : 33 } );   // ok
-    //return MyCollection.find( {}, { "nonProperty._id" : null } );   // ok
-    //return MyCollection.find( { $or: [ { name:"myName" } ] } ); // ok
-    //return MyCollection.find( { $or: [ { "nonProperty._id" : null } ] } );  // ok 
-    //return MyCollection.find( { $or: [ { "emptyItems._id" : null } ] } ); // Exception in defer callback: Error: failed to copy newResults into _published!
-    //return MyCollection.find( { $or: [ { name:"myName" }, { "items._id" : null } ] } ); // Exception in defer callback: Error: failed to copy newResults into _published!
-    //return MyCollection.find( { $or: [ { name:"myName" }, { "items._id" : 12 } ] } ); // ok
-    //return MyCollection.find( { $or: [ { name:"myName" }, { "items._id" : 33 } ] } ); // ok
-    
-    //return MyCollection.find( { $or: [ { "items._id" : null } ] } ); // Exception in defer callback: Error: failed to copy newResults into _published!
-    return MyCollection.find( { $or: [ { "items._id" : undefined } ] } ); // Exception in defer callback: Error: failed to copy newResults into _published!
-
-});
-
-
+    return MyCollection.find( { $or: [ { "items._id" : null } ] } ); // Exception in defer callback: Error: failed to copy newResults into _published!
+  });
 
 }
 
